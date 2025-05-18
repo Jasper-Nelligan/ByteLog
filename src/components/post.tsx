@@ -9,10 +9,15 @@ export function LatestPost() {
 
   const utils = api.useUtils();
   const [name, setName] = useState("");
+
   const createPost = api.post.create.useMutation({
     onSuccess: async () => {
       await utils.post.invalidate();
       setName("");
+      console.log("Success");
+    },
+    onError: (error) => {
+      console.error("Error from tRPC mutation:", error);
     },
   });
 

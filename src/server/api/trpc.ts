@@ -104,3 +104,10 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
  * are logged in.
  */
 export const publicProcedure = t.procedure.use(timingMiddleware);
+
+const ti = initTRPC.create({
+  errorFormatter({ shape, error }) {
+    console.error("❌ TRPC Error:", error);
+    return shape;
+  },
+});
