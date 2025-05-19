@@ -6,4 +6,5 @@ export type LoginDetails = {
 export type Post = {
   title: string;
   message: string;
+  createdAt: Date;
 }

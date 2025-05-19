@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { date, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
@@ -9,6 +9,7 @@ import { Textarea } from "./ui/textarea";
 import { api } from "@/trpc/react";
 import { useState } from "react";
 import type { Post } from "@/types";
+import { DatePicker } from "./datePicker";
 
 interface AddPostDialogProps {
   open: boolean;
@@ -21,6 +22,7 @@ export default function AddPostDialog({ open, setOpen, onAddPost }: AddPostDialo
   const [formError, setFormError] = useState("");
 
   const postFormSchema = z.object({
+    createdAt: z.date(),
     title: z.string().min(1, "A title is required"),
     message: z.string().min(1, "Update message is required"),
   });
@@ -60,6 +62,19 @@ export default function AddPostDialog({ open, setOpen, onAddPost }: AddPostDialo
         </DialogHeader>
         <Form {...postForm}>
           <form onSubmit={postForm.handleSubmit(onPostSubmit)} className="space-y-5">
+            <FormField
+              control={postForm.control}
+              name="createdAt"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-semibold">Date</FormLabel>
+                  <FormControl>
+                    <DatePicker value={field.value ?? new Date()} onChange={field.onChange} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={postForm.control}
               name="title"

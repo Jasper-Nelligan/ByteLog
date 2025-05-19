@@ -6,6 +6,8 @@ import { useTheme } from "next-themes";
 import { useEffect, useState, type SetStateAction } from "react";
 import LoginDialog from "./loginDialog";
 import AddPostDialog from "./addPostDialog";
+import { api } from "@/trpc/react";
+import Post from "./post";
 
 export default function ClientHome() {
   const { theme, setTheme } = useTheme();
@@ -14,6 +16,9 @@ export default function ClientHome() {
   const [showLoginDialog, setShowLoginDialog] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showAddPostDialog, setShowAddPostDialog] = useState(false);
+
+  const { data: posts, isLoading } = api.post.getAll.useQuery();
+
 
   useEffect(() => {
     setMounted(true);
@@ -26,6 +31,18 @@ export default function ClientHome() {
   const onLoginSuccess = () => {
     setIsLoggedIn(true);
   }
+
+  const renderPosts = () => {
+    return (
+      <div className="flex flex-col space-y-2 w-full">
+        {posts?.map(post => {
+          return <Post key={post.id} title={post.title} message={post.message} date={post.createdAt} />
+        })}
+      </div>
+    )
+  }
+
+  console.log(!isLoggedIn || (posts?.length === undefined || posts.length <= 0))
 
   const renderAuthButtons = () => {
     if (!isLoggedIn) {
@@ -74,7 +91,7 @@ export default function ClientHome() {
     return (
       <main className="p-2 flex flex-col min-h-screen w-full items-center justify-start">
         <LoginDialog open={showLoginDialog} setOpen={setShowLoginDialog} onLoginSuccess={onLoginSuccess} />
-        <AddPostDialog open={showAddPostDialog} setOpen={setShowAddPostDialog} onAddPost={() => {}} />
+        <AddPostDialog open={showAddPostDialog} setOpen={setShowAddPostDialog} onAddPost={() => { }} />
         <header className="flex justify-between items-center w-full">
           <img
             src={theme === "light" ? "ByteLog_logo_light.png" : "ByteLog_logo_dark.png"}
@@ -106,17 +123,24 @@ export default function ClientHome() {
         </header>
         <div className="flex flex-col lg:flex-row items-start justify-between w-full px-4 py-6 bg-custom-background-gray">
           <div className="w-full lg:w-1/2">
-            <p className="text-primary text-4xl font-semibold">Your Updates</p>
-            <div className="flex flex-col items-center justify-center mt-10">
-              <img
-                src="/no_updates.png"
-                alt="No updates posted yet"
-              />
-              <p className="text-muted-foreground mt-3">{isLoggedIn ? "You haven't posted any updates yet" : "Please log in to post updates"}</p>
-              <div className="mt-5">
-                {!isLoggedIn && <Button onClick={() => setShowLoginDialog(true)}>Log In</Button>}
-                {isLoggedIn && <Button onClick={() => {setShowAddPostDialog(true)}}>Add update</Button>}
-              </div>
+            <div className="flex justify-between">
+              <p className="text-primary text-4xl font-semibold">Your Updates</p>
+              {isLoggedIn && <Button onClick={() => { setShowAddPostDialog(true) }}>Add update</Button>}
+            </div>
+            <div className="mt-10">
+              {(!isLoggedIn || (posts?.length === undefined || posts.length <= 0)) && (
+                <div className="flex flex-col items-center justify-center">
+                  <img
+                    src="/no_updates.png"
+                    alt="No updates posted yet"
+                  />
+                  <p className="text-muted-foreground mt-3">{isLoggedIn ? "You haven't posted any updates yet" : "Please log in to post updates"}</p>
+                  <div className="mt-5">
+                    {!isLoggedIn && <Button onClick={() => setShowLoginDialog(true)}>Log In</Button>}
+                  </div>
+                </div>
+              )}
+              {posts && isLoggedIn && renderPosts()}
             </div>
           </div>
 

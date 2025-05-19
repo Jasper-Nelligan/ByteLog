@@ -1,4 +1,3 @@
-// app/page.tsx or another RSC file (NO "use client")
 import { HydrateClient, api } from "@/trpc/server";
 import ClientHome from "@/components/clientHome";
 
