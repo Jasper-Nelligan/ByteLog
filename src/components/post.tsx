@@ -14,7 +14,7 @@ export default function Post({ title, message, date }: PostProps) {
         <p>{date.toDateString()}</p>
       </CardHeader>
       <CardContent>
-        <p>{message}</p>
+        <p className="whitespace-pre-line">{message}</p>
       </CardContent>
     </Card>
   )
