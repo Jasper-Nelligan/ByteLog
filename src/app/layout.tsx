@@ -4,7 +4,7 @@ import { type Metadata } from "next";
 import { Geist } from "next/font/google";
 
 import { TRPCReactProvider } from "@/trpc/react";
-import { ThemeProvider } from "./providers/themeProvider";
+import { ThemeProvider } from "../providers/themeProvider";
 
 export const metadata: Metadata = {
   title: "Create T3 App",

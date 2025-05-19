@@ -5,6 +5,7 @@ import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState, type SetStateAction } from "react";
 import LoginDialog from "./loginDialog";
+import AddPostDialog from "./addPostDialog";
 
 export default function ClientHome() {
   const { theme, setTheme } = useTheme();
@@ -12,6 +13,7 @@ export default function ClientHome() {
   const [showVideo, setShowVideo] = useState(true);
   const [showLoginDialog, setShowLoginDialog] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showAddPostDialog, setShowAddPostDialog] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -23,7 +25,6 @@ export default function ClientHome() {
 
   const onLoginSuccess = () => {
     setIsLoggedIn(true);
-    setShowLoginDialog(false);
   }
 
   const renderAuthButtons = () => {
@@ -40,7 +41,7 @@ export default function ClientHome() {
 
     return (
       <div className="flex items-center space-x-3">
-        <p>Welcome, HireUpUser</p>
+        <p>Welcome, userId</p>
         <Button
           variant="outline"
           onClick={() => { setIsLoggedIn(false) }}
@@ -73,6 +74,7 @@ export default function ClientHome() {
     return (
       <main className="p-2 flex flex-col min-h-screen w-full items-center justify-start">
         <LoginDialog open={showLoginDialog} setOpen={setShowLoginDialog} onLoginSuccess={onLoginSuccess} />
+        <AddPostDialog open={showAddPostDialog} setOpen={setShowAddPostDialog} onAddPost={() => {}} />
         <header className="flex justify-between items-center w-full">
           <img
             src={theme === "light" ? "ByteLog_logo_light.png" : "ByteLog_logo_dark.png"}
@@ -113,7 +115,7 @@ export default function ClientHome() {
               <p className="text-muted-foreground mt-3">{isLoggedIn ? "You haven't posted any updates yet" : "Please log in to post updates"}</p>
               <div className="mt-5">
                 {!isLoggedIn && <Button onClick={() => setShowLoginDialog(true)}>Log In</Button>}
-                {isLoggedIn && <Button onClick={() => {}}>Add update</Button>}
+                {isLoggedIn && <Button onClick={() => {setShowAddPostDialog(true)}}>Add update</Button>}
               </div>
             </div>
           </div>

@@ -3,7 +3,7 @@ import { HydrateClient, api } from "@/trpc/server";
 import ClientHome from "@/components/clientHome";
 
 export default async function HomePage() {
-  await api.post.getLatest.prefetch();
+  await api.post.getAll.prefetch();
 
   return (
     <HydrateClient>

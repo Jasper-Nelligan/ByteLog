@@ -6,16 +6,12 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
+import type { LoginDetails } from "@/types";
 
 interface LoginDialogProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onLoginSuccess: () => void;
-}
-
-type LoginDetails = {
-  username: string;
-  password: string;
 }
 
 export default function LoginDialog({ open, setOpen, onLoginSuccess }: LoginDialogProps) {
@@ -36,8 +32,9 @@ export default function LoginDialog({ open, setOpen, onLoginSuccess }: LoginDial
 
   const handleLoginSubmit = async (loginDetails: LoginDetails) => {
     setFormError(null);
-    if (loginDetails.username === "HireUpUser" && loginDetails.password === "FullStack2025") {
+    if (loginDetails.username === "userId" && loginDetails.password === "password") {
       onLoginSuccess();
+      setOpen(false);
     } else {
       setFormError("Error: Incorrect email or password. Please try again.");
     }
