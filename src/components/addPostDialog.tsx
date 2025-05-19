@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useForm } from "react-hook-form";
-import { date, z } from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
@@ -10,6 +10,7 @@ import { api } from "@/trpc/react";
 import { useState } from "react";
 import type { Post } from "@/types";
 import { DatePicker } from "./datePicker";
+import { LoadingSpinner } from "./ui/loading-spinner";
 
 interface AddPostDialogProps {
   open: boolean;
@@ -20,6 +21,7 @@ interface AddPostDialogProps {
 export default function AddPostDialog({ open, setOpen, onAddPost }: AddPostDialogProps) {
   const utils = api.useUtils();
   const [formError, setFormError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const postFormSchema = z.object({
     createdAt: z.date(),
@@ -30,6 +32,7 @@ export default function AddPostDialog({ open, setOpen, onAddPost }: AddPostDialo
   const postForm = useForm<z.infer<typeof postFormSchema>>({
     resolver: zodResolver(postFormSchema),
     defaultValues: {
+      createdAt: new Date(),
       title: "",
       message: "",
     },
@@ -37,6 +40,7 @@ export default function AddPostDialog({ open, setOpen, onAddPost }: AddPostDialo
 
   const onPostSubmit = (post: Post) => {
     setFormError("");
+    setIsSubmitting(true);
     createPost.mutate(post)
   }
 
@@ -48,6 +52,7 @@ export default function AddPostDialog({ open, setOpen, onAddPost }: AddPostDialo
     },
     onError: (error) => {
       console.error("Error from tRPC mutation:", error);
+      setIsSubmitting(false);
       setFormError("There was error submitting your update. Please try again.")
     },
   });
@@ -67,7 +72,6 @@ export default function AddPostDialog({ open, setOpen, onAddPost }: AddPostDialo
               name="createdAt"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-semibold">Date</FormLabel>
                   <FormControl>
                     <DatePicker value={field.value ?? new Date()} onChange={field.onChange} />
                   </FormControl>
@@ -106,9 +110,17 @@ export default function AddPostDialog({ open, setOpen, onAddPost }: AddPostDialo
             {formError && (
               <p className="text-sm font-medium text-destructive">{formError}</p>
             )}
-            <Button className="w-full" type="submit">
-              Submit
-            </Button>
+            {!isSubmitting &&
+              <Button className="w-full" type="submit">
+                Submit
+              </Button>
+            }
+            {isSubmitting &&
+              <div className="flex w-full items-center justify-center space-x-2">
+                <p>Submitting...</p>
+                <LoadingSpinner />
+              </div>
+            }
           </form>
         </Form>
       </DialogContent>
