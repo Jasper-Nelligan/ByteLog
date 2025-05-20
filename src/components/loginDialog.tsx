@@ -47,6 +47,9 @@ export default function LoginDialog({ open, setOpen, onLoginSuccess }: LoginDial
           <DialogTitle>
             Login
           </DialogTitle>
+          <DialogDescription className="sr-only">
+            Login Form
+          </DialogDescription>
         </DialogHeader>
         <Form {...loginForm}>
           <form onSubmit={loginForm.handleSubmit(handleLoginSubmit)} className="space-y-5">

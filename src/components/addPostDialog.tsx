@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -65,6 +65,9 @@ export default function AddPostDialog({ open, setOpen, onAddPost }: AddPostDialo
           <DialogTitle>
             Add Update
           </DialogTitle>
+          <DialogDescription className="sr-only">
+            Add Update Form
+          </DialogDescription>
         </DialogHeader>
         <Form {...postForm}>
           <form onSubmit={postForm.handleSubmit(onPostSubmit)} className="space-y-5">
