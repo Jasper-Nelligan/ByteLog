@@ -6,14 +6,14 @@ import { Bar, BarChart, Tooltip, XAxis, YAxis } from "recharts";
 const monthlyPostCountConfig = {
   postCount: {
     label: "Posts",
-    color: "#2563eb",
+    color: "#5086e9",
   }
 } satisfies ChartConfig;
 
 const topWordsConfig = {
   count: {
     label: "Count",
-    color: "#16a34a",
+    color: "#5086e9",
   },
 } satisfies ChartConfig;
 
@@ -29,17 +29,17 @@ export default function Analytics({ posts }: AnalyticsProps) {
   const renderCharts = () => {
     return (
       <div className="flex flex-col items-center justify-center mt-5">
-        <p className="text-secondary text-4xl font-semibold mb-5">Posts Per Month</p>
+        <p className="text-secondary dark:text-white text-4xl font-semibold mb-5">Posts Per Month</p>
         <ChartContainer config={monthlyPostCountConfig} className="min-h-[200px] w-full">
           <BarChart accessibilityLayer data={monthlyPostCountData}>
             <XAxis dataKey="month" />
             <YAxis />
             <Tooltip />
-            <Bar dataKey="postCount" fill="var(--secondary)" radius={4} />
+            <Bar dataKey="postCount" fill={monthlyPostCountConfig.postCount.color} radius={4} />
           </BarChart>
         </ChartContainer>
 
-        <p className="text-secondary text-4xl font-semibold mb-5 mt-5">Top Words Used</p>
+        <p className="text-secondary dark:text-white text-4xl font-semibold mb-5 mt-5">Top Words Used</p>
         <ChartContainer config={topWordsConfig} className="min-h-[300px] w-full">
           <BarChart
             data={topNWords}
@@ -48,7 +48,7 @@ export default function Analytics({ posts }: AnalyticsProps) {
             <XAxis type="number" />
             <YAxis dataKey="word" type="category" />
             <Tooltip />
-            <Bar dataKey="count" fill="var(--secondary)" radius={4} />
+            <Bar dataKey="count" fill={topWordsConfig.count.color} radius={4} />
           </BarChart>
         </ChartContainer>
       </div>
