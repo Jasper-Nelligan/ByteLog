@@ -50,6 +50,7 @@ export default function ClientHome() {
         <Button
           variant="outline"
           onClick={() => setShowLoginDialog(true)}
+          className="ml-2"
         >
           Log In
         </Button>
@@ -58,7 +59,7 @@ export default function ClientHome() {
 
     return (
       <div className="flex items-center space-x-3">
-        <p>Welcome, userId</p>
+        <p className="sm:text-xs md:text-lg">Welcome, userId</p>
         <Button
           variant="outline"
           onClick={() => { setIsLoggedIn(false) }}
@@ -92,38 +93,37 @@ export default function ClientHome() {
       <main className="p-2 flex flex-col min-h-screen w-full items-center justify-start">
         <LoginDialog open={showLoginDialog} setOpen={setShowLoginDialog} onLoginSuccess={onLoginSuccess} />
         <AddPostDialog open={showAddPostDialog} setOpen={setShowAddPostDialog} onAddPost={() => { }} />
-        <header className="flex justify-between items-center w-full">
+        <header className="flex w-full items-center justify-between px-4">
           <img
             src={theme === "light" ? "ByteLog_logo_light.png" : "ByteLog_logo_dark.png"}
             alt="ByteLog logo"
-            className="max-w-[12rem] md:max-w-[16rem] h-auto"
+            className="max-w-[12rem] md:max-w-[16rem] h-auto hidden md:block"
           />
-          <div className="flex items-center justify-center md:mt-0 mr-10">
-            <div className="flex space-x-4 mt-3 md:mt-0 md:mr-4">
-              <Button onClick={handleThemeChange} variant="ghost" size="icon">
-                <Sun className="h-8 w-8 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                <Moon className="absolute h-8 w-8 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              </Button>
-              <Button
-                onClick={() =>
-                  window.open("https://github.com/Jasper-Nelligan/hireup-full-stack-challenge", "_blank")
-                }
-                variant="ghost"
-                size="icon"
-              >
-                <img
-                  src={theme === "light" ? "/github_logo_light.png" : "/github_logo_dark.png"}
-                  alt="GitHub"
-                  className="h-8 w-8"
-                />
-              </Button>
-              {renderAuthButtons()}
-            </div>
+          <div className="flex items-center space-x-4">
+            <Button onClick={handleThemeChange} variant="ghost" size="icon">
+              <Sun className="h-8 w-8 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+              <Moon className="absolute h-8 w-8 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            </Button>
+            <Button
+              onClick={() =>
+                window.open("https://github.com/Jasper-Nelligan/hireup-full-stack-challenge", "_blank")
+              }
+              variant="ghost"
+              size="icon"
+            >
+              <img
+                src={theme === "light" ? "/github_logo_light.png" : "/github_logo_dark.png"}
+                alt="GitHub"
+                className="h-8 w-8"
+              />
+            </Button>
+            {renderAuthButtons()}
           </div>
+
         </header>
         <div className="flex flex-col lg:flex-row items-start justify-between w-full px-4 py-6 bg-custom-background-gray">
           <div className="w-full lg:w-1/2">
-            <div className="flex justify-between border-b pb-2">
+            <div className="flex justify-between items-center border-b pb-2">
               <p className="text-primary text-4xl font-semibold">Your Updates ({posts?.length || 0})</p>
               {isLoggedIn && <Button onClick={() => { setShowAddPostDialog(true) }}>Add update</Button>}
             </div>
@@ -144,8 +144,8 @@ export default function ClientHome() {
             </div>
           </div>
 
-          <div className="w-full lg:w-1/2 pl-4">
-            {isLoggedIn && <Analytics posts={posts}/>}
+          <div className="w-full lg:w-1/2 md:pl-4 mt-5 md:mt-0">
+            {isLoggedIn && <Analytics posts={posts} />}
           </div>
         </div>
       </main>
