@@ -8,7 +8,7 @@ import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { api } from "@/trpc/react";
 import { useState } from "react";
-import type { Post } from "@/types";
+import type { FrontendPost } from "@/types";
 import { DatePicker } from "./datePicker";
 import { LoadingSpinner } from "./ui/loading-spinner";
 
@@ -38,10 +38,10 @@ export default function AddPostDialog({ open, setOpen, onAddPost }: AddPostDialo
     },
   });
 
-  const onPostSubmit = (post: Post) => {
+  const onPostSubmit = (data: z.infer<typeof postFormSchema>) => {
     setFormError("");
     setIsSubmitting(true);
-    createPost.mutate(post)
+    createPost.mutate(data)
   }
 
   const createPost = api.post.create.useMutation({
@@ -49,6 +49,7 @@ export default function AddPostDialog({ open, setOpen, onAddPost }: AddPostDialo
       await utils.post.invalidate();
       setOpen(false);
       postForm.reset();
+      setIsSubmitting(false);
     },
     onError: (error) => {
       console.error("Error from tRPC mutation:", error);

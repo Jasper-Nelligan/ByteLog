@@ -8,6 +8,8 @@ import LoginDialog from "./loginDialog";
 import AddPostDialog from "./addPostDialog";
 import { api } from "@/trpc/react";
 import Post from "./post";
+import Analytics from "./analytics";
+import type { FrontendPost } from "@/types";
 
 export default function ClientHome() {
   const { theme, setTheme } = useTheme();
@@ -17,8 +19,8 @@ export default function ClientHome() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showAddPostDialog, setShowAddPostDialog] = useState(false);
 
-  const { data: posts, isLoading } = api.post.getAll.useQuery();
-
+  const { data, isLoading } = api.post.getAll.useQuery();
+  const posts: FrontendPost[] | undefined = data;
 
   useEffect(() => {
     setMounted(true);
@@ -41,8 +43,6 @@ export default function ClientHome() {
       </div>
     )
   }
-
-  console.log(!isLoggedIn || (posts?.length === undefined || posts.length <= 0))
 
   const renderAuthButtons = () => {
     if (!isLoggedIn) {
@@ -124,7 +124,7 @@ export default function ClientHome() {
         <div className="flex flex-col lg:flex-row items-start justify-between w-full px-4 py-6 bg-custom-background-gray">
           <div className="w-full lg:w-1/2">
             <div className="flex justify-between border-b pb-2">
-              <p className="text-primary text-4xl font-semibold">Your Updates</p>
+              <p className="text-primary text-4xl font-semibold">Your Updates ({posts?.length || 0})</p>
               {isLoggedIn && <Button onClick={() => { setShowAddPostDialog(true) }}>Add update</Button>}
             </div>
             <div className="mt-10">
@@ -144,8 +144,8 @@ export default function ClientHome() {
             </div>
           </div>
 
-          <div className="w-full lg:w-1/2">
-            {/* Content */}
+          <div className="w-full lg:w-1/2 pl-4">
+            {isLoggedIn && <Analytics posts={posts}/>}
           </div>
         </div>
       </main>

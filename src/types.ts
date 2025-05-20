@@ -3,7 +3,8 @@ export type LoginDetails = {
   password: string;
 }
 
-export type Post = {
+export type FrontendPost = {
+  id: number;
   title: string;
   message: string;
   createdAt: Date;
