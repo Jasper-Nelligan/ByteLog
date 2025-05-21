@@ -1,29 +1,31 @@
-# Create T3 App
+# ByteLog - Daily Update App
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+This application was built for the HireUp Full Stack Developer Challenge. It leverages the T3 Stack—featuring Next.js, TypeScript, Tailwind CSS, tRPC, Prisma, and Zod—along with Shadcn UI for component styling and PostgreSQL as the database.
 
-## What's next? How do I make an app with this?
+## Features:
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+- **Simulated Authentication**: Users can sign in using a simulated authentication form
+- **Daily Update Submission**: Submit text-based daily updates through a form with validation powered by Zod.
+- **Data Persistence with PostgreSQL**: Updates are stored in a PostgreSQL database and retrieved via Prisma, allowing users to view their full update history. Updates are filtered by user, as required.
+- **Post Analytics**: Includes insights such as **total number of posts**, **posts per month**, and the **most frequently used words**.
+- **Dark Mode**
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Setup
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+1. Clone or download this repository
+1. Run `npm install` in your terminal. Make sure you have Node.js (v18 or higher) installed.
+1. Create a `.env` file in the root, and add the following environment variable:
 
-## Learn More
+    ```
+    DATABASE_URL=postgresql://postgres:xNubgRg4z3f3RTR9@db.aesuruxzavkowkrupubf.supabase.co:5432/postgres
+    ```
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+    This connects to a live database, so please do not share this secret anywhere else.
+1. Run these prisma commands:
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+    ```
+    npx prisma generate
+    npx prisma migrate dev
+    ```
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
-
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+1. Run `npm run dev`, and open http://localhost:3000/ in your browser to view this project
