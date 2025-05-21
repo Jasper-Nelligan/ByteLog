@@ -1,6 +1,6 @@
 # ByteLog - Daily Update App
 
-This application was built for the HireUp Full Stack Developer Challenge. It leverages the T3 Stack—featuring Next.js, TypeScript, Tailwind CSS, tRPC, Prisma, and Zod—along with Shadcn UI for component styling and PostgreSQL as the database.
+This application leverages the T3 Stack—featuring Next.js, TypeScript, Tailwind CSS, tRPC, Prisma, and Zod—along with Shadcn UI for component styling and PostgreSQL as the database.
 
 ## Features:
 
