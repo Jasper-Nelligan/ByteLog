@@ -32,7 +32,7 @@ export default function LoginDialog({ open, setOpen, onLoginSuccess }: LoginDial
 
   const handleLoginSubmit = async (loginDetails: LoginDetails) => {
     setFormError(null);
-    if (loginDetails.username === "userId" && loginDetails.password === "password") {
+    if (loginDetails.username === "mockUser" && loginDetails.password === "password") {
       onLoginSuccess();
       setOpen(false);
     } else {

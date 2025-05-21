@@ -19,8 +19,7 @@ export default function ClientHome() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showAddPostDialog, setShowAddPostDialog] = useState(false);
 
-  const { data, isLoading } = api.post.getAll.useQuery();
-  const posts: FrontendPost[] | undefined = data;
+  const { data: postsByUser } = api.post.getByUser.useQuery({ userId: "mockUser" });
 
   useEffect(() => {
     setMounted(true);
@@ -37,7 +36,7 @@ export default function ClientHome() {
   const renderPosts = () => {
     return (
       <div className="flex flex-col space-y-2 w-full">
-        {posts?.map(post => {
+        {postsByUser?.map(post => {
           return <Post key={post.id} title={post.title} message={post.message} date={post.createdAt} />
         })}
       </div>
@@ -124,11 +123,11 @@ export default function ClientHome() {
         <div className="flex flex-col lg:flex-row items-start justify-between w-full px-4 py-6 bg-custom-background-gray">
           <div className="w-full lg:w-1/2">
             <div className="flex justify-between items-center border-b pb-2">
-              <p className="text-primary text-4xl font-semibold">Your Updates ({posts?.length || 0})</p>
+              <p className="text-primary text-4xl font-semibold">Your Updates ({postsByUser?.length || 0})</p>
               {isLoggedIn && <Button onClick={() => { setShowAddPostDialog(true) }}>Add update</Button>}
             </div>
             <div className="mt-10">
-              {(!isLoggedIn || (posts?.length === undefined || posts.length <= 0)) && (
+              {(!isLoggedIn || (postsByUser?.length === undefined || postsByUser.length <= 0)) && (
                 <div className="flex flex-col items-center justify-center">
                   <img
                     src="/no_updates.png"
@@ -140,12 +139,12 @@ export default function ClientHome() {
                   </div>
                 </div>
               )}
-              {posts && isLoggedIn && renderPosts()}
+              {postsByUser && isLoggedIn && renderPosts()}
             </div>
           </div>
 
           <div className="w-full lg:w-1/2 md:pl-4 mt-5 md:mt-0">
-            {isLoggedIn && <Analytics posts={posts} />}
+            {isLoggedIn && <Analytics posts={postsByUser} />}
           </div>
         </div>
       </main>
