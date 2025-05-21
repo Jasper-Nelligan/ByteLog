@@ -12,8 +12,10 @@ This application was built for the HireUp Full Stack Developer Challenge. It lev
 
 ## Setup
 
+Make sure you have Node.js (v18 or higher) installed. Then, follow these steps:
+
 1. Clone or download this repository
-1. Run `npm install` in your terminal. Make sure you have Node.js (v18 or higher) installed.
+1. Run `npm install --legacy-peer-deps` in your terminal. For the purposes of this demo project, please use `--legacy-peer-deps` to ignore incompatibilities.
 1. Create a `.env` file in the root, and add the following environment variable:
 
     ```
@@ -29,3 +31,8 @@ This application was built for the HireUp Full Stack Developer Challenge. It lev
     ```
 
 1. Run `npm run dev`, and open http://localhost:3000/ in your browser to view this project
+1. Finally, to access and post updates, log in using these credentials:
+    ```
+    Username: mockUser
+    Password: password
+    ```
