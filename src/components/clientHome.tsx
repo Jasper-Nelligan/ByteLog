@@ -123,7 +123,9 @@ export default function ClientHome() {
         <div className="flex flex-col lg:flex-row items-start justify-between w-full px-4 py-6 bg-custom-background-gray">
           <div className="w-full lg:w-1/2">
             <div className="flex justify-between items-center border-b pb-2">
-              <p className="text-primary text-4xl font-semibold">Your Updates ({postsByUser?.length || 0})</p>
+              <p className="text-primary text-4xl font-semibold">
+                Your Updates {isLoggedIn && `(${postsByUser?.length || 0})`}
+              </p>
               {isLoggedIn && <Button onClick={() => { setShowAddPostDialog(true) }}>Add update</Button>}
             </div>
             <div className="mt-10">
