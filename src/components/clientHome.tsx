@@ -3,13 +3,13 @@
 import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useEffect, useState, type SetStateAction } from "react";
+import { useEffect, useState } from "react";
 import LoginDialog from "./loginDialog";
 import AddPostDialog from "./addPostDialog";
 import { api } from "@/trpc/react";
 import Post from "./post";
 import Analytics from "./analytics";
-import type { FrontendPost } from "@/types";
+import Image from 'next/image';
 
 export default function ClientHome() {
   const { theme, setTheme } = useTheme();
@@ -91,9 +91,9 @@ export default function ClientHome() {
     return (
       <main className="p-2 flex flex-col min-h-screen w-full items-center justify-start">
         <LoginDialog open={showLoginDialog} setOpen={setShowLoginDialog} onLoginSuccess={onLoginSuccess} />
-        <AddPostDialog open={showAddPostDialog} setOpen={setShowAddPostDialog} onAddPost={() => { }} />
+        <AddPostDialog open={showAddPostDialog} setOpen={setShowAddPostDialog} />
         <header className="flex w-full items-center justify-between px-4">
-          <img
+          <Image
             src={theme === "light" ? "ByteLog_logo_light.png" : "ByteLog_logo_dark.png"}
             alt="ByteLog logo"
             className="max-w-[12rem] md:max-w-[16rem] h-auto hidden md:block"
@@ -110,7 +110,7 @@ export default function ClientHome() {
               variant="ghost"
               size="icon"
             >
-              <img
+              <Image
                 src={theme === "light" ? "/github_logo_light.png" : "/github_logo_dark.png"}
                 alt="GitHub"
                 className="h-8 w-8"
@@ -124,14 +124,14 @@ export default function ClientHome() {
           <div className="w-full lg:w-1/2">
             <div className="flex justify-between items-center border-b pb-2">
               <p className="text-primary text-4xl font-semibold">
-                Your Updates {isLoggedIn && `(${postsByUser?.length || 0})`}
+                Your Updates {isLoggedIn && `(${postsByUser?.length ?? 0})`}
               </p>
               {isLoggedIn && <Button onClick={() => { setShowAddPostDialog(true) }}>Add update</Button>}
             </div>
             <div className="mt-10">
               {(!isLoggedIn || (postsByUser?.length === undefined || postsByUser.length <= 0)) && (
                 <div className="flex flex-col items-center justify-center">
-                  <img
+                  <Image
                     src="/no_updates.png"
                     alt="No updates posted yet"
                   />

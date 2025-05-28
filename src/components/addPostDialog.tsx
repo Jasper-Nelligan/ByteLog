@@ -8,17 +8,15 @@ import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { api } from "@/trpc/react";
 import { useState } from "react";
-import type { FrontendPost } from "@/types";
 import { DatePicker } from "./datePicker";
 import { LoadingSpinner } from "./ui/loading-spinner";
 
 interface AddPostDialogProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  onAddPost: () => void;
 }
 
-export default function AddPostDialog({ open, setOpen, onAddPost }: AddPostDialogProps) {
+export default function AddPostDialog({ open, setOpen }: AddPostDialogProps) {
   const utils = api.useUtils();
   const [formError, setFormError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);

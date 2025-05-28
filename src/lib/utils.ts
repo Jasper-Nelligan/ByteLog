@@ -49,7 +49,7 @@ export function getTopWords(posts: FrontendPost[] | undefined, topN = 5): { word
 
     cleaned.forEach(word => {
       if (word) {
-        wordCounts.set(word, (wordCounts.get(word) || 0) + 1);
+        wordCounts.set(word, (wordCounts.get(word) ?? 0) + 1);
       }
     });
   });
