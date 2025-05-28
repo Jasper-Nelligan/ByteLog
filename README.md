@@ -16,19 +16,24 @@ Make sure you have Node.js (v18 or higher) installed. Then, follow these steps:
 
 1. Clone or download this repository
 1. Run `npm install --legacy-peer-deps` in your terminal. For the purposes of this demo project, please use `--legacy-peer-deps` to ignore incompatibilities.
-1. Create a `.env` file in the root, and add the following environment variable:
+1. Set up Supabase. For this, you'll need to:
+
+    1. Go to Supabase and create a new project
+    1. After the project is created, copy the Direct Connection string (PostgreSQL URI format).
+    1. Create a `.env` file in the root, and add your direct connection string there:
 
     ```
-    DATABASE_URL=postgresql://postgres:xNubgRg4z3f3RTR9@db.aesuruxzavkowkrupubf.supabase.co:5432/postgres
+    DATABASE_URL=[YOUR_CONNECTION_STRING]
     ```
 
-    This connects to a live database, so please do not share this secret anywhere else.
 1. Run these prisma commands:
 
     ```
     npx prisma generate
-    npx prisma migrate dev
+    npx prisma db push
     ```
+
+    This will create the necessary tables and structures in your Supabase database.
 
 1. Run `npm run dev`, and open http://localhost:3000/ in your browser to view this project
 1. Finally, to access and post updates, log in using these credentials:
@@ -36,3 +41,9 @@ Make sure you have Node.js (v18 or higher) installed. Then, follow these steps:
     Username: mockUser
     Password: password
     ```
+
+## Demo
+
+You can find a live demo of this project here:
+
+https://byte-log-sigma.vercel.app/
