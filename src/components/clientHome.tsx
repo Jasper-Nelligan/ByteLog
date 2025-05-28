@@ -93,11 +93,14 @@ export default function ClientHome() {
         <LoginDialog open={showLoginDialog} setOpen={setShowLoginDialog} onLoginSuccess={onLoginSuccess} />
         <AddPostDialog open={showAddPostDialog} setOpen={setShowAddPostDialog} />
         <header className="flex w-full items-center justify-between px-4">
-          <Image
-            src={theme === "light" ? "ByteLog_logo_light.png" : "ByteLog_logo_dark.png"}
-            alt="ByteLog logo"
-            className="max-w-[12rem] md:max-w-[16rem] h-auto hidden md:block"
-          />
+          <div className="relative max-w-[12rem] md:max-w-[16rem] h-auto hidden md:block aspect-[4/1]">
+            <Image
+              src={theme === "light" ? "/byteLog_logo_light.png" : "/byteLog_logo_dark.png"}
+              alt="ByteLog logo"
+              fill
+              className="object-contain"
+            />
+          </div>
           <div className="flex items-center space-x-4">
             <Button onClick={handleThemeChange} variant="ghost" size="icon">
               <Sun className="h-8 w-8 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
@@ -113,7 +116,8 @@ export default function ClientHome() {
               <Image
                 src={theme === "light" ? "/github_logo_light.png" : "/github_logo_dark.png"}
                 alt="GitHub"
-                className="h-8 w-8"
+                height="8"
+                width="8"
               />
             </Button>
             {renderAuthButtons()}
@@ -134,6 +138,8 @@ export default function ClientHome() {
                   <Image
                     src="/no_updates.png"
                     alt="No updates posted yet"
+                    height="205"
+                    width="290"
                   />
                   <p className="text-muted-foreground mt-3">{isLoggedIn ? "You haven't posted any updates yet" : "Please log in to post updates"}</p>
                   <div className="mt-5">
